@@ -1,0 +1,183 @@
+/* Global Reset */
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  background: linear-gradient(to right, #eef2f3, #8e9eab);
+  min-height: 100vh;
+  color: #333;
+}
+
+.container {
+  max-width: 800px;
+  margin: 3rem auto;
+  background: #ffffff;
+  padding: 2rem;
+  border-radius: 12px;
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.15);
+  transition: all 0.3s ease;
+}
+
+input, button {
+  width: 100%;
+  margin: 12px 0;
+  padding: 12px;
+  font-size: 1rem;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+}
+
+input:focus {
+  outline: none;
+  border-color: #007bff;
+  box-shadow: 0 0 5px rgba(0,123,255,0.3);
+}
+
+button {
+  background: #007bff;
+  color: white;
+  border: none;
+  font-weight: bold;
+  transition: background 0.3s ease;
+}
+
+button:hover {
+  background: #0056b3;
+}
+
+/* Navbar */
+nav.navbar {
+  background: #1f2937;
+  color: white;
+  padding: 1rem 2rem;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+nav.navbar .container {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+nav.navbar h1 {
+  font-size: 1.5rem;
+  color: #fff;
+}
+
+nav.navbar a, nav.navbar button {
+  color: #121416;
+  margin-left: 1rem;
+  background: transparent;
+  border: none;
+  font-size: 1rem;
+  text-decoration: none;
+  transition: color 0.3s ease;
+  padding: 0.5rem 1rem;
+  border-radius: 8px;
+  border-width: 5px;
+}
+
+nav.navbar a:hover, nav.navbar button:hover {
+  color: #60a5fa;
+  cursor: pointer;
+}
+
+/* Cards Layout */
+.card-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 1.5rem;
+  margin-top: 2rem;
+}
+
+.card {
+  background: #ffffff;
+  padding: 1.5rem;
+  border-radius: 12px;
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+  transition: transform 0.2s ease;
+}
+
+.card:hover {
+  transform: translateY(-5px);
+}
+
+.card h3 {
+  margin-bottom: 0.5rem;
+  color: #1f2937;
+}
+
+.card p {
+  margin: 0.25rem 0;
+  color: #4b5563;
+}
+
+.card a {
+  color: #3b82f6;
+  text-decoration: underline;
+}
+
+.card a:hover {
+  color: #1d4ed8;
+}
+
+/* Dashboard Summary Cards */
+.dashboard-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+  gap: 1rem;
+  margin-top: 2rem;
+}
+
+.dashboard-grid .card {
+  background: #f0f9ff;
+  border-left: 5px solid #3b82f6;
+  text-align: left;
+}
+h2 {
+  margin-bottom: 0.5rem;
+}
+
+p {
+  margin-top: 0;
+  font-size: 0.95rem;
+}
+/* Edit & Delete Buttons */
+.card-actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 0.5rem;
+  margin-top: 1rem;
+}
+
+.card-actions button {
+  padding: 10px 12px;
+  font-size: 0.85rem;
+  border-radius: 6px;
+  border: none;
+  cursor: pointer;
+  transition: background 0.3s ease;
+}
+
+.card-actions .edit-btn {
+  background-color: #10b981; /* green */
+  color: white;
+}
+
+.card-actions .edit-btn:hover {
+  background-color: #059669;
+}
+
+.card-actions .delete-btn {
+  background-color: #ef4444; /* red */
+  color: white;
+}
+
+.card-actions .delete-btn:hover {
+  background-color: #dc2626;
+}
+
