@@ -1,4 +1,4 @@
-from flask import request, session, jsonify, Flask
+from flask import request, session, jsonify, Flask, send_from_directory
 from flask_cors import CORS
 from flask_jwt_extended import JWTManager
 from dotenv import load_dotenv
@@ -7,6 +7,7 @@ from flask_restful import Api
 from flask_sqlalchemy import SQLAlchemy
 from config import Config
 from flask_bcrypt import Bcrypt
+import os
 
 load_dotenv()
 
@@ -17,7 +18,7 @@ jwt = JWTManager()
 bcrypt = Bcrypt()
 
 def create_app():
-    app = Flask(__name__)
+    app = Flask(__name__, static_folder="../client/build", static_url_path="/")
     app.config.from_object(Config)
 
     # Init extensions
@@ -29,7 +30,7 @@ def create_app():
     # CORS for frontend
     CORS(app, supports_credentials=True, origins=["http://localhost:3000"])
 
-    # JWT error handlers 👇 placed *inside* create_app
+    
     @jwt.expired_token_loader
     def expired_token_callback(jwt_header, jwt_payload):
         return jsonify({"error": "Token has expired"}), 401
@@ -41,6 +42,16 @@ def create_app():
     @jwt.unauthorized_loader
     def unauthorized_callback(error):
         return jsonify({"error": "Missing token"}), 401
+    
+
+    @app.route("/", defaults={"path": ""})
+    @app.route("/<path:path>")
+    def serve_react(path):
+        if path != "" and os.path.exists(os.path.join(app.static_folder, path)):
+            return send_from_directory(app.static_folder, path)
+        else:
+            return send_from_directory(app.static_folder, "index.html")
+
 
     # Flask-RESTful API routes
     from routes.auth_routes import Register, Login
