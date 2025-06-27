@@ -54,7 +54,7 @@ def create_app():
     api.add_resource(Register, "/register")
     api.add_resource(Login, "/login")
     api.add_resource(CardListResource, "/cards")
-    api.add_resource(CardDetailResource, "/cards/<int:card_id>")
+    api.add_resource(CardDetailResource, "/cards/<int:card_id>/review")
     api.add_resource(AdminUserListResource, "/admin/users")
     api.add_resource(DashboardSummaryResource, "/dashboard/summary")
     api.add_resource(PublicCardListResource, "/cards/public")

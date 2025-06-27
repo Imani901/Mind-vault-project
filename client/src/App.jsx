@@ -21,7 +21,7 @@ function App() {
           <Route path="/cards" element={<CardList />} />
           <Route path="/cards/new" element={<CardForm />} />
           <Route path="/cards/edit/:id" element={<CardForm />} />
-          <Route path="/cards/all" element={<CardsPage />} /> {/* optional */}
+          <Route path="/cards/all" element={<CardsPage />} /> 
         </Routes>
       </div>
     </Router>

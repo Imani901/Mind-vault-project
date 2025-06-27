@@ -10,26 +10,25 @@ class DashboardSummaryResource(Resource):
     def get(self):
         user_id = get_jwt_identity()
         now = datetime.now(timezone.utc)
+        today = now.date()
 
         user = User.query.get(user_id)
         if not user:
             return {"error": "User not found"}, 404
 
-        total_cards = KnowledgeCard.query.filter_by(user_id=user_id).count()
-        due_today = KnowledgeCard.query.filter(
-            KnowledgeCard.user_id == user_id,
-            KnowledgeCard.next_review_due <= now
-        ).count()
-        overdue = KnowledgeCard.query.filter(
-            KnowledgeCard.user_id == user_id,
-            KnowledgeCard.next_review_due < now - timedelta(days=1)
-        ).count()
+        # Fetch all cards for the user (optimization optional)
+        cards = KnowledgeCard.query.filter_by(user_id=user_id).all()
 
+        total_cards = len(cards)
+        due_today = sum(1 for c in cards if c.next_review_due and c.next_review_due.date() == today)
+        overdue = sum(1 for c in cards if c.next_review_due and c.next_review_due.date() < today)
+
+        # Extract and count tags
         all_tags = [
             tag.strip()
-            for card in KnowledgeCard.query.filter_by(user_id=user_id).all()
+            for card in cards
             for tag in (card.tags or '').split(',')
-            if tag
+            if tag.strip()
         ]
         top_tags = [tag for tag, _ in Counter(all_tags).most_common(3)]
 
@@ -44,3 +43,4 @@ class DashboardSummaryResource(Resource):
             "overdue": overdue,
             "top_tags": top_tags
         }, 200
+

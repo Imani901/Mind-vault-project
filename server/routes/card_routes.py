@@ -1,4 +1,4 @@
-from flask import request
+from flask import request, make_response
 from flask_restful import Resource
 from flask_jwt_extended import jwt_required, get_jwt_identity
 from models.card import KnowledgeCard
@@ -99,6 +99,8 @@ class CardDetailResource(Resource):
 
 
 class CardReviewResource(Resource):
+    
+
     @jwt_required()
     def patch(self, card_id):
         user_id = get_jwt_identity()
@@ -109,10 +111,9 @@ class CardReviewResource(Resource):
         if not card:
             return {"error": "Card not found"}, 404
 
-        now = datetime.utcnow()
+        now = datetime.now(timezone.utc)
         card.last_reviewed = now
 
-        # Update review score and next due date
         if success:
             card.review_score = min(card.review_score + 1, 5)
         else:

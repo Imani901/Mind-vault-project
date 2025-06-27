@@ -180,4 +180,37 @@ p {
 .card-actions .delete-btn:hover {
   background-color: #dc2626;
 }
+.card-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+  gap: 1rem;
+  margin-top: 1rem;
+}
+
+.card {
+  background: #ffffff;
+  padding: 1rem;
+  border-radius: 12px;
+  box-shadow: 0 6px 16px rgba(0, 0, 0, 0.1);
+}
+
+.card h3 {
+  margin-top: 0;
+  color: #1f2937;
+}
+
+.card p {
+  margin: 0.3rem 0;
+  color: #374151;
+}
+
+.card a {
+  color: #3b82f6;
+  text-decoration: none;
+}
+
+.card a:hover {
+  text-decoration: underline;
+}
+
 

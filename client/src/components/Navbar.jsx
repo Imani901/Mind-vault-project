@@ -21,6 +21,7 @@ function Navbar() {
               <Link to="/dashboard">Dashboard</Link>
               <Link to="/cards">Card List</Link> {/* ✅ Add this */}
               <Link to="/cards/new">New Card</Link>
+              <Link to="/cards/all">search bar</Link>
               <button onClick={handleLogout}>Logout</button>
             </>
           ) : (

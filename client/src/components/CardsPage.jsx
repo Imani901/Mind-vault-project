@@ -3,12 +3,13 @@ import api from "../services/api";
 
 function CardsPage() {
   const [cards, setCards] = useState([]);
-  const [form, setForm] = useState({ title: "", summary: "", tags: "", source_link: "" });
+  const [query, setQuery] = useState(""); // For search input
+  const [searchTerm, setSearchTerm] = useState("");
 
   useEffect(() => {
     async function fetchCards() {
       try {
-        const res = await api.get("/cards");
+        const res = await api.get(`/cards?q=${encodeURIComponent(searchTerm)}`);
         setCards(res.data);
       } catch (err) {
         alert("Failed to load cards");
@@ -16,49 +17,58 @@ function CardsPage() {
     }
 
     fetchCards();
-  }, []);
+  }, [searchTerm]);
 
-  async function handleSubmit(e) {
+  const handleSearch = (e) => {
     e.preventDefault();
-    try {
-      const res = await api.post("/cards", {
-        ...form,
-        tags: form.tags.split(",").map(tag => tag.trim()),
-      });
-      setCards([...cards, res.data]);
-      setForm({ title: "", summary: "", tags: "", source_link: "" });
-    } catch (err) {
-      alert("Failed to create card");
-    }
-  }
+    setSearchTerm(query.trim());
+  };
+  
 
-  function handleChange(e) {
-    setForm({ ...form, [e.target.name]: e.target.value });
-  }
 
   return (
-    <div>
-      <h2>Create Knowledge Card</h2>
-      <form onSubmit={handleSubmit}>
-        <input name="title" placeholder="Title" value={form.title} onChange={handleChange} />
-        <textarea name="summary" placeholder="Summary" value={form.summary} onChange={handleChange} />
-        <input name="tags" placeholder="Tags (comma-separated)" value={form.tags} onChange={handleChange} />
-        <input name="source_link" placeholder="Source Link" value={form.source_link} onChange={handleChange} />
-        <button type="submit">Add Card</button>
+    <div className="container">
+      <h2>Search Knowledge Cards</h2>
+
+      <form onSubmit={handleSearch} style={{ display: "flex", gap: "0.5rem", marginBottom: "1rem" }}>
+        <input
+          type="text"
+          placeholder="Search by title or summary..."
+          value={query}
+          onChange={(e) => setQuery(e.target.value)}
+        />
+        <button type="submit">Search</button>
       </form>
 
-      <h2>Your Cards</h2>
-      <ul>
-        {cards.map(card => (
-          <li key={card.id}>
-            <strong>{card.title}</strong> - {card.summary}
-            <br />
-            Tags: {card.tags.join(", ")}
-          </li>
-        ))}
-      </ul>
+      {cards.length === 0 ? (
+        <p>No cards found.</p>
+      ) : (
+         <div className="card-grid">
+          {cards.map((card) => (
+            <div key={card.id} className="card">
+              <h3>{card.title}</h3>
+              <p>{card.summary}</p>
+              <p>
+                <strong>Tags:</strong> {card.tags.join(", ")}
+              </p>
+              {card.source_link && (
+                <p>
+                  <a href={card.source_link} target="_blank" rel="noreferrer">
+                    Source
+                  </a>
+                </p>
+              )}
+              <div style={{ display: "flex", gap: "0.5rem", marginTop: "0.5rem" }}>
+               
+              </div>
+            </div>
+          ))}
+        </div>
+      )}
     </div>
   );
 }
 
 export default CardsPage;
+
+        
