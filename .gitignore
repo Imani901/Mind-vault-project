@@ -9,8 +9,7 @@ __pycache__/
 
 # Virtualenv
 venv/
-.env
-.env.*
+
 
 # Pyenv
 .python-version
