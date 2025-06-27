@@ -19,8 +19,6 @@ Tag-based Search & Filtering
 
 Spaced Repetition Logic
 
-Admin Role Support (optional)
-
 CORS Support for Frontend
 
 ### ⚙️ Tech Stack

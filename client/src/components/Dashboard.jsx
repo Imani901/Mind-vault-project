@@ -26,7 +26,7 @@ function Dashboard() {
     <div>
       <h2>Welcome, {user.username}!</h2>
       <p>Email: {user.email}</p>
-      <p>Role: {user.role}</p>
+      
 
       <div className="dashboard-grid">
         <div className="card">
