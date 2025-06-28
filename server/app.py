@@ -28,7 +28,14 @@ def create_app():
     bcrypt.init_app(app)
 
     # CORS for frontend
-    CORS(app, supports_credentials=True, origins=["https://mind-vault-project-jb298tlj8-imani901s-projects.vercel.app"])
+    CORS(app, 
+         supports_credentials=True,
+         origins=["https://mind-vault-project-jb298tlj8-imani901s-projects.vercel.app"],
+         methods=["GET", "POST", "PUT", "DELETE", "OPTIONS"],
+         allow_headers=["Content-Type", "Authorization", "X-Requested-With"],
+         expose_headers=["Access-Control-Allow-Origin"],
+         max_age=600)
+
 
     
     @jwt.expired_token_loader
