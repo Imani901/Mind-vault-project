@@ -28,7 +28,7 @@ def create_app():
     bcrypt.init_app(app)
 
     # CORS for frontend
-    CORS(app, supports_credentials=True, origins=["http://localhost:3000"])
+    CORS(app, supports_credentials=True, origins=["https://mind-vault-project.vercel.app/"])
 
     
     @jwt.expired_token_loader

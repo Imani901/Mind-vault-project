@@ -1,7 +1,7 @@
 import axios from "axios";
 
 const api = axios.create({
-  baseURL: "http://localhost:5555",
+  baseURL: "https://mind-vault-project-5.onrender.com",
   withCredentials: true,
 });
 
@@ -13,7 +13,6 @@ api.interceptors.request.use((config) => {
   return config;
 });
 
-// ✅ Automatically handle expired tokens
 api.interceptors.response.use(
   (response) => response,
   (error) => {
