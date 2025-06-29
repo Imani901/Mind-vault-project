@@ -1,7 +1,12 @@
 import axios from "axios";
 
+const baseURL =
+  process.env.NODE_ENV === "development"
+    ? "http://localhost:5555"
+    : "https://mind-vault-project-8.onrender.com";
+
 const api = axios.create({
-  baseURL: "https://mind-vault-project-5.onrender.com",
+  baseURL,
   withCredentials: true,
 });
 
