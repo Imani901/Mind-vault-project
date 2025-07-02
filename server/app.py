@@ -18,7 +18,7 @@ jwt = JWTManager()
 bcrypt = Bcrypt()
 
 def create_app():
-    app = Flask(__name__, static_folder="../client/build", static_url_path="/")
+    app = Flask(__name__)
     app.config.from_object(Config)
 
     # Initialize extensions
@@ -31,7 +31,7 @@ def create_app():
     CORS(
         app,
         origins=app.config["ALLOWED_ORIGINS"],
-        methods=["GET", "POST", "PUT", "DELETE", "OPTIONS"],
+        methods=["GET", "POST", "PUT", "DELETE", "OPTIONS", "PATCH"],
         allow_headers=["Content-Type", "Authorization"],
         supports_credentials=True
     )
@@ -44,7 +44,7 @@ def create_app():
             response.headers["Access-Control-Allow-Origin"] = origin
             response.headers["Access-Control-Allow-Credentials"] = "true"
             response.headers["Access-Control-Allow-Headers"] = "Content-Type,Authorization"
-            response.headers["Access-Control-Allow-Methods"] = "GET,POST,PUT,DELETE,OPTIONS"
+            response.headers["Access-Control-Allow-Methods"] = "GET,POST,PUT,DELETE,OPTIONS,PATCH"
         return response
 
     @app.before_request
@@ -73,13 +73,8 @@ def create_app():
     def unauthorized_callback(error):
         return jsonify({"error": "Missing token"}), 401
 
-    # Serve React frontend
-    @app.route("/", defaults={"path": ""})
-    @app.route("/<path:path>")
-    def serve_react(path):
-        if path != "" and os.path.exists(os.path.join(app.static_folder, path)):
-            return send_from_directory(app.static_folder, path)
-        return send_from_directory(app.static_folder, "index.html")
+    
+   
 
     # Register API routes
     from routes.auth_routes import Register, Login
@@ -91,7 +86,7 @@ def create_app():
     api.add_resource(Register, "/register")
     api.add_resource(Login, "/login")
     api.add_resource(CardListResource, "/cards")
-    api.add_resource(CardDetailResource, "/cards/<int:card_id>/review")
+    api.add_resource(CardDetailResource, "/cards/<int:card_id>")
     api.add_resource(AdminUserListResource, "/admin/users")
     api.add_resource(DashboardSummaryResource, "/dashboard/summary")
     api.add_resource(PublicCardListResource, "/cards/public")
